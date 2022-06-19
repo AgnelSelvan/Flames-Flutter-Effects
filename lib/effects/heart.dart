@@ -27,8 +27,7 @@ class HeartEffect extends FlameGame {
 }
 
 class Heart extends SpriteComponent {
-  Heart({Anchor? anchor, Vector2? position})
-      : super(anchor: anchor, position: position);
+  Heart({super.anchor, super.position});
   @override
   Future<void>? onLoad() async {
     sprite = await Sprite.load("heart.png");
