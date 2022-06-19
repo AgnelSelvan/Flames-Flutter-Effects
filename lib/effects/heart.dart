@@ -7,7 +7,7 @@ class HeartEffect extends FlameGame {
   @override
   Future<void> onLoad() async {
     add(
-      Heart(anchor: Anchor.center, position: size / 2)
+      HeartIcon()
         ..add(
           ScaleEffect.to(
             Vector2.all(1.4),
@@ -26,13 +26,28 @@ class HeartEffect extends FlameGame {
   }
 }
 
-class Heart extends SpriteComponent {
-  Heart({super.anchor, super.position});
-  @override
-  Future<void>? onLoad() async {
-    sprite = await Sprite.load("heart.png");
-    size = Vector2.all(64);
+class HeartIcon extends PositionComponent {
+  HeartIcon() {
+    double width = 60;
+    double height = 60;
+    shape = Path()
+      ..moveTo(0.5 * width, height * 0.35)
+      ..cubicTo(0.2 * width, height * 0.1, -0.25 * width, height * 0.6,
+          0.5 * width, height)
+      ..moveTo(0.5 * width, height * 0.35)
+      ..cubicTo(0.8 * width, height * 0.1, 1.25 * width, height * 0.6,
+          0.5 * width, height);
+    shape.close();
+  }
 
-    return super.onLoad();
+  late final Path shape;
+  late final Paint paint = Paint()
+    ..color = Colors.red
+    ..style = PaintingStyle.fill
+    ..strokeWidth = 0;
+
+  @override
+  void render(Canvas canvas) {
+    canvas.drawPath(shape, paint);
   }
 }
